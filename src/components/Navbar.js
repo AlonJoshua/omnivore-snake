@@ -4,7 +4,7 @@ import '../App.css';
 const Navbar = () => {
 	return (
 		<div className='navbar'>
-		<h3> nevegate here </h3>
+		<h3> Back to manu </h3>
 		</div>
 	)
 }

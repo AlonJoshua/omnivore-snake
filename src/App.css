@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -15,16 +16,23 @@
 }
 
 .navbar { 
-  display: inline-flex;
+  display: block;
   border: 1px black solid;
-  width: 100%;
-  justify-content: center;
+  width: 440px;
+  padding: 8px;
+  margin: auto;
+  text-align: center;
  }
 
 .play-area {
   display: grid;
-  grid-template-columns: repeat(19, 44px);
-  grid-template-rows: repeat(15, 44px);
+  margin: auto;
+  width: 440px;
+  border: 3px solid green;
+  padding: 8px;
+  grid-template-columns: repeat(10, 44px);
+  grid-template-rows: repeat(13, 44px);
+  justify-content: center;
   border: 1px solid black;
 }
 
