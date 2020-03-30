@@ -2,21 +2,22 @@ import React, { Component, Fragment } from 'react';
 import '../App.css';
 
 class Snake extends Component {
-	constructor() {
-		super()
-		this.state = {
-
-		}
+	constructor(props) {
+		super(props)
 	}
 
 	render() {
 		return (
 			<Fragment>
-			 <div className='snake-head'>
+			 <div 
+			 id='snake-head'
+			 style={{order: 0, backgroundColor: 'blue'}}
+			 >
 			 </div>
-			 <div className='snake-body'>
-			 </div>
-			 <div className='snake-body'>
+			 <div 
+			 className='snake-body'
+			 id='snake-body'
+			 >
 			 </div>
 			</Fragment>
 		)

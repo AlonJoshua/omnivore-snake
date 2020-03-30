@@ -3,27 +3,38 @@ import '../App.css';
 import Navbar from '../components/Navbar';
 import Snake from './Snake';
 
-class Play extends Component {
+class Play extends React.Component {
 	constructor() {
 		super()
-		this.state = {
+	}
 
-		}
+	snakePlace() {
+		document.getElementById('snake-head').style.order=1;
+		console.log('click');
 	}
 
 	render() {
 		return (
 			<Fragment>
 			<Navbar />
-				<div className='play-area'>
+				<div 
+				className='play-area'
+				id='container'
+				>
 				{/*
 				
-				1) set play area
-				2) Snake start at the center of the screen
+				1) Snake start at the center of the screen
+				2) make the snake move
 
 				 */}
-				<Snake />
+				<Snake
+				/>
 				</div>
+				<button 
+				onClick={() => this.snakePlace()}
+				>
+				style
+				</button>
 			</Fragment>
 		)
 	}
