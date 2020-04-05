@@ -11,7 +11,7 @@ class App extends Component {
   }
 
   startBtn(click) {
-    this.setState({ route: 'play' });
+   return this.setState({ route: 'play' });
   }
 
   render() {

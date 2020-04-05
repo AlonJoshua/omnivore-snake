@@ -4,13 +4,13 @@ import Navbar from '../components/Navbar';
 import Snake from './Snake';
 
 class Play extends React.Component {
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
 	}
 
-	snakePlace() {
-		document.getElementById('snake-head').style.order=1;
-		console.log('click');
+	componentDidMount() {
+		const playArea = document.getElementById('container');
+		console.log('play-area:', playArea);
 	}
 
 	render() {
@@ -23,18 +23,13 @@ class Play extends React.Component {
 				>
 				{/*
 				
-				1) Snake start at the center of the screen
-				2) make the snake move
+				1) fill the play area with div squares
+				2) Snake start at the center of the screen
 
 				 */}
 				<Snake
 				/>
 				</div>
-				<button 
-				onClick={() => this.snakePlace()}
-				>
-				style
-				</button>
 			</Fragment>
 		)
 	}
