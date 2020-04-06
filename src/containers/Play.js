@@ -9,8 +9,16 @@ class Play extends React.Component {
 	}
 
 	componentDidMount() {
+		// fill play area grid with divs
 		const playArea = document.getElementById('container');
-		console.log('play-area:', playArea);
+		const snakeHead = document.getElementById('snake-head');
+		const snakeBody = document.getElementById('snake-body');
+		const divArray = ['snake-head', 'snake-body'];
+		while (divArray.length < 130) {
+			const newDiv = document.createElement('div');
+			playArea.appendChild(newDiv);
+			divArray.push('newDiv');
+		}
 	}
 
 	render() {
@@ -23,8 +31,7 @@ class Play extends React.Component {
 				>
 				{/*
 				
-				1) fill the play area with div squares
-				2) Snake start at the center of the screen
+				1) Snake start at the center of the screen
 
 				 */}
 				<Snake
