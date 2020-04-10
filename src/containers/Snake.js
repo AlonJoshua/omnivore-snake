@@ -10,14 +10,37 @@ class Snake extends Component {
 
 
 	snakeMoves = (e) => {
-		console.log('event keydown: ', e.keyCode)
+		const divs = document.getElementsByClassName('play-div');
+		let headOrder = document.getElementById('snake-head').style.order;
+		let orderInt = parseInt(headOrder);
 		const arrowKey = e.keyCode;
+		for (let div in divs) {
+			if (div.order === headOrder) {
+				div.order--
+				console.log(div.order);
+			}
+		}
 		switch (arrowKey) {
+			case 38:
+				orderInt -= 10;
+				orderInt.toString()
+				document.getElementById('snake-head').style.order = orderInt;
+				break;
 			case 39:
-				document.getElementById('snake-head').style.order = 1;
+				orderInt += 1;
+				orderInt.toString()
+				document.getElementById('snake-head').style.order = orderInt;
 				break;
 			case 37:
-				document.getElementById('snake-head').style.order = -1;
+				orderInt -= 1;
+				orderInt.toString()
+				document.getElementById('snake-head').style.order = orderInt;
+				break;
+			case 40:
+				orderInt += 10;
+				orderInt.toString()
+				document.getElementById('snake-head').style.order = orderInt;
+				break;
 			default:
 				break;
 		}
@@ -34,13 +57,16 @@ class Snake extends Component {
 			 id='snake-head'
 			 style={{
 			 	backgroundColor: 'blue',
-			 	order: '0'
+			 	order: '53'
 			 }}
 			 >
 			 </div>
 			 <div 
 			 className='snake-body'
 			 id='snake-body'
+			 style={{
+				 	order: '63'
+			 }}
 			 >
 			 </div>
 			</Fragment>
