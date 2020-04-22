@@ -36,9 +36,10 @@
   border: 1px solid black;
 }
 
- #snake-head {
+ .head {
   border: 1px black solid;
+  background-color: blue;
  }
- .snake-body {
+ .body {
   border: 1px black solid;
  }
