@@ -6,7 +6,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      route: 'main',
+      route: 'main-manu',
     }
   }
 
@@ -17,7 +17,7 @@ class App extends Component {
   render() {
     const { route } = this.state;
     return (
-      route === 'main' ?
+      route === 'main-manu' ?
       <Fragment>
       <h1 className='titles'>Omnivore Snake</h1>
       <button id='start-btn' onClick={() => {this.startBtn()}}>Press to Starts</button>

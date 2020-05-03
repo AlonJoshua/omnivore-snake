@@ -9,39 +9,54 @@ class Play extends Component {
 			gameSqueres: []
 		}
 	}
-
+		// snake move system: based on grid div color
 		snakeMoves = (e) => {
-		const { gameSqueres } = this.state;
+		const { gameSqueres, snake } = this.state;
 		const arrowKey = e.keyCode;
+
 		const findHead = (div) => div.className === 'head';
 		const headIndex = gameSqueres.findIndex(findHead);
+
+		const findTail = (div) => div.id === snake[snake.length-1].id;
+		const tailIndex = gameSqueres.findIndex(findTail);
+
+		const newBodyArr = () => {
+			snake[1].className = 'body';
+			gameSqueres[tailIndex].className = 'play-div';
+			snake.pop()
+		}
+
 		switch (arrowKey) {
 			case 38:
 				gameSqueres[headIndex - 10].className = 'head';
-				gameSqueres[headIndex].className = 'play-div';
+				snake.unshift(gameSqueres[headIndex - 10]);
+				newBodyArr();
 				break;
 			case 39:
 				gameSqueres[headIndex + 1].className = 'head';
-				gameSqueres[headIndex].className = 'play-div';
+				snake.unshift(gameSqueres[headIndex + 1]);
+				newBodyArr();
 				break;
 			case 37:
 				gameSqueres[headIndex - 1].className = 'head';
-				gameSqueres[headIndex].className = 'play-div';
+				snake.unshift(gameSqueres[headIndex - 1]);
+				newBodyArr();
 				break;
 			case 40:
 				gameSqueres[headIndex + 10].className = 'head';
-				gameSqueres[headIndex].className = 'play-div';
+				snake.unshift(gameSqueres[headIndex + 10]);
+				newBodyArr();
 				break;
 			default:
 				break;
 		}
+		
 	}
 
 	componentDidMount() {
 		// fill play area grid with divs
+		const { gameSqueres } = this.state;
 		const playArea = document.getElementById('container');
-		// const snakeHead = document.getElementById('snake-head');
-		// const snakeBody = document.getElementById('snake-body');
 		const divArray = [];
 		let order = 0;
 		let id = 1;
@@ -55,11 +70,13 @@ class Play extends Component {
 				order += 1;
 				id += 1;
 		}
-		this.setState({gameSqueres: divArray});
+		this.setState({gameSqueres: divArray, snake: [divArray[105], divArray[115], divArray[125]]});
+
+		// create snake head and body
+
 		setTimeout(() => {
 			document.addEventListener("keydown", this.snakeMoves, false);
-			const head = document.getElementById('106');
-			head.className = 'head';
+			document.getElementById('106').className = 'head';
 			document.getElementById('116').className = 'body';
 			document.getElementById('126').className = 'body';
 		}, 200);
@@ -74,7 +91,7 @@ class Play extends Component {
 				id='container'
 				>
 				{/*
-				1) create a body for the snake that moves after him
+				1) every time the head moves, the body squares will move accordingly
 				
 				 */}
 				</div>
