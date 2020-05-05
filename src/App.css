@@ -43,3 +43,7 @@
  .body {
   border: 1px black solid;
  }
+
+ .food {
+  border: 1px red solid;
+ }

@@ -11,32 +11,56 @@ class Play extends Component {
 	}
 		// snake move system: based on grid div color
 		snakeMoves = (e) => {
-		const { gameSqueres, snake, lastMove } = this.state;
+		const { gameSqueres, snake } = this.state;
 		const arrowKey = e.keyCode;
 
+		// head values
 		const findHead = (div) => div.className === 'head';
 		const headIndex = gameSqueres.findIndex(findHead);
-		const headId = gameSqueres[headIndex].id;
+		const headId = parseInt(gameSqueres[headIndex].id);
 
+		// tail tip values
 		const findTail = (div) => div.id === snake[snake.length-1].id;
 		const tailIndex = gameSqueres.findIndex(findTail);
 
+		// border arrays
 		const findRightBorder = (div) => div.className === 'play-div' && div.id % 10 === 0;
-
 		const findLeftBorder = (div) => div.className === 'play-div' && div.id % 10 - 1 === 0;
+		const leftBorderIdArr = gameSqueres.filter(findLeftBorder).map(e => parseInt(e.id));
+		const rightBorderArr = gameSqueres.filter(findRightBorder).map(e => parseInt(e.id));
 
-		const newBodyArr = () => {
-			snake[1].className = 'body';
-			gameSqueres[tailIndex].className = 'play-div';
-			snake.pop()
+		// food values
+		const findFood = (div) => div.className ==='food';
+		const foodIdArr = gameSqueres.filter(findFood).map(e => parseInt(e.id))
+
+		// check for eating
+		const eatFood = (id) => {
+			return id === headId - 10 || 
+			id === headId + 10 ||
+			id === headId - 1 ||
+			id === headId + 1
 		}
+		const snakeAte = () => foodIdArr.some(eatFood)
 
 		// move functions
+		const newBodyArr = () => {
+			if (snakeAte()) {
+				// body grow
+				snake[1].className = 'body';
+			} else {
+				snake[1].className = 'body';
+				gameSqueres[tailIndex].className = 'play-div';
+				snake.pop()
+			}
+		}
+
 		const movesUp = () => {
 			// can't cross top border
 			if (!gameSqueres[headIndex - 10]) {
-				// this.setState({snake: lastMove});
 				console.log('game over: top cross')
+			} else if (gameSqueres[headIndex - 10].className === 'body') {
+				// can't cross body
+				console.log('game over: body cross')
 			} else {
 				gameSqueres[headIndex - 10].className = 'head'
 				snake.unshift(gameSqueres[headIndex - 10]);
@@ -46,11 +70,14 @@ class Play extends Component {
 
 		const movesRight = () => {
 			// can't skip to left border
-			const leftBorderArr = gameSqueres.filter(findLeftBorder).map(e => e.id);
-			if (leftBorderArr.some(id => parseInt(id) === parseInt(headId) + 1)) {
+			if (leftBorderIdArr.some(id => id === headId + 1)) {
 				console.log('game over: right cross')
 			} else if (!gameSqueres[headIndex + 1]) {
+			// can't cross right bottom border
 				console.log('game over: right cross')
+			} else if (gameSqueres[headIndex + 1].className === 'body') {
+				// can't cross body
+				console.log('game over: body cross')
 			} else {
 				gameSqueres[headIndex + 1].className = 'head'
 				snake.unshift(gameSqueres[headIndex + 1]);
@@ -61,8 +88,10 @@ class Play extends Component {
 		const movesDown = () => {
 			// can't cross bottom border
 			if (!gameSqueres[headIndex + 10]) {
-				// this.setState({snake: lastMove});
 				console.log('game over: bottom cross')
+			} else if (gameSqueres[headIndex + 10].className === 'body') {
+				// can't cross body
+				console.log('game over: body cross')
 			} else {
 				gameSqueres[headIndex + 10].className = 'head'
 				snake.unshift(gameSqueres[headIndex + 10]);
@@ -71,12 +100,15 @@ class Play extends Component {
 		}
 
 		const movesLeft = () => {
-			// can't cross left border
-			const rightBorderArr = gameSqueres.filter(findRightBorder).map(e => e.id);
-			if (rightBorderArr.some(id => parseInt(id) === parseInt(headId) - 1)) {
+			// can't skip to right border
+			if (rightBorderArr.some(id => id === headId - 1)) {
 				console.log('game over: left cross')
 			} else if (!gameSqueres[headIndex - 1]) {
+			// can't cross left top corner
 				console.log('game over: left cross')
+			} else if (gameSqueres[headIndex - 1].className === 'body') {
+				// can't cross body
+				console.log('game over: body cross')
 			} else {
 				gameSqueres[headIndex - 1].className = 'head'
 				snake.unshift(gameSqueres[headIndex - 1]);
@@ -87,6 +119,7 @@ class Play extends Component {
 		switch (arrowKey) {
 			case 38:
 				movesUp();
+				snakeAte();
 				break;
 			case 39:
 				movesRight();
@@ -121,8 +154,7 @@ class Play extends Component {
 		}
 		this.setState({
 			gameSqueres: divArray, 
-			snake: [divArray[105], divArray[115], divArray[125]],
-			lastMove: [divArray[105], divArray[115], divArray[125]]
+			snake: [divArray[105], divArray[115], divArray[125]]
 		});
 
 		// create snake head and body
@@ -132,6 +164,9 @@ class Play extends Component {
 			document.getElementById('106').className = 'head';
 			document.getElementById('116').className = 'body';
 			document.getElementById('126').className = 'body';
+			document.getElementById('45').className = 'food';
+			document.getElementById('25').className = 'food';
+
 		}, 200);
 	}
 
@@ -144,7 +179,8 @@ class Play extends Component {
 				id='container'
 				>
 				{/*
-				1) make moves valid with no border or body cross
+
+				1) If snake head cross body, game over
 				
 				 */}
 				</div>
